@@ -1,0 +1,20 @@
+<div class="container">
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Title</th>
+                <th scope="col">Contenido</th>
+                <th scope="col">Eliminar</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let item of posts">
+                <th scope="row">{{item['id']}}</th>
+                <td>{{item['title']}}</td>
+                <td>{{item['body']}}</td>
+                <td><button class="btn btn-danger" (click)="deletePosts(item['id'])">Eliminar</button></td>
+            </tr>
+        </tbody>
+    </table>
+</div>
