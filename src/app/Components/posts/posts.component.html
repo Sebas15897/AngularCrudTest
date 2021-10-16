@@ -1,4 +1,11 @@
 <div class="container">
+    <h2>Busqueda por titulo</h2>
+    <input type="search" placeholder="Ingrese un titulo" class="form-control" name="title" #title="ngModel" [(ngModel)]="obj['title']">
+    <br>
+    <button class="btn btn-primary" (click)="searchPost(obj['title'])">Buscar</button>
+</div>
+<br>
+<div class="container">
     <div class="row row-cols-1 row-cols-md-3 g-4">
         <div class="col" *ngFor="let item of posts">
             <div class="card h-100">

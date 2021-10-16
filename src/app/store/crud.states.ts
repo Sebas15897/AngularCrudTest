@@ -1,6 +1,6 @@
 import { State, Action, StateContext, Selector } from '@ngxs/store';
 import { ApiService } from "../Services/api/api.service";
-import { deletePost, getPost } from './crud.actions';
+import { deletePost, getPost, searchPost } from './crud.actions';
 import { Posts } from "./crud.models";
 import { tap } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
@@ -10,6 +10,9 @@ import { Injectable } from '@angular/core';
     defaults: {
         posts: [],
         postsD: [{
+            id: ''
+        }],
+        postsS: [{
             id: ''
         }]
     }
@@ -26,6 +29,11 @@ export class PostsStateModel {
     @Selector()
     static deletePost(state : Posts) {
         return state.posts;
+    }
+    //Selector busqueda
+    @Selector()
+    static searchPost(state : Posts) {
+        return state.posts
     }
     //Acción Obtener posts
     @Action(getPost)
@@ -52,6 +60,22 @@ export class PostsStateModel {
                 setState({
                     ...state,
                     postsD: ids
+                })
+            })
+        )
+    }
+    //Acción buscar
+    @Action(searchPost)
+    searchPost({getState, setState}: StateContext<Posts>, { payload }: searchPost) {
+        return this.htpp.searchPost(payload).pipe(
+            tap((res) =>{
+                const state = getState();
+                const serch = res.title
+                console.log("payload" + payload)
+                console.log("res" + res)
+                setState({
+                    ...state,
+                    postsS : serch
                 })
             })
         )

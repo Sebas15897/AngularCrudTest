@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Select, Store } from '@ngxs/store';
 import { Observable } from 'rxjs';
-import { getPost } from 'src/app/store/crud.actions';
+import { getPost, searchPost } from 'src/app/store/crud.actions';
 import { Posts } from 'src/app/store/crud.models';
 import { PostsStateModel } from 'src/app/store/crud.states';
 import Swal from 'sweetalert2';
@@ -13,17 +13,25 @@ import Swal from 'sweetalert2';
 })
 export class PostsComponent implements OnInit {
   posts = [];
-  constructor(private store : Store) {}
+  inputValor = [];
+  obj =[]
+  constructor(private store : Store) {
+    this.obj = [{
+      title: ''
+    }]
+  }
   //Selects
   @Select(PostsStateModel.getPosts) posts$: Observable<Posts[]>;
+  @Select(PostsStateModel.searchPost) postS$: Observable<any>;
   ngOnInit(): void {
     this.store.dispatch(new getPost());
     this.posts$.subscribe((res) => {
       this.posts = res;
+      this.inputValor = res;
       console.log(this.posts)
     })
   }
-
+  //Función eliminar posts
   deletePosts(id:any) {
     Swal.fire({
       title: 'Seguro que desea eliminar el post?',
@@ -34,7 +42,6 @@ export class PostsComponent implements OnInit {
       cancelButtonColor: '#d33',
       confirmButtonText: 'Si, estoy seguro!'
     }).then((result) => {
-
       if (result.isConfirmed) {
         let content = this.posts.filter((x)=> x.id !== id);
         this.posts = content;
@@ -45,5 +52,24 @@ export class PostsComponent implements OnInit {
         )
       }
     })
+  }
+  //Función buscar posts por titulo
+  searchPost(title:any){
+    console.log("title " , title)
+    let swt = false;
+    this.inputValor.forEach(element => {
+      if(element.title === title){
+        const content = element
+        console.log(content)
+        swt = true
+        return true
+      }
+    });
+
+    if(!swt){
+      Swal.fire("dato no encontrado")
+    }
+
+    this.obj = []
   }
 }

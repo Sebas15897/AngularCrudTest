@@ -8,6 +8,7 @@ import { HttpClientModule } from '@angular/common/http'
 import { AppComponent } from './app.component';
 import { PostsStateModel } from './store/crud.states';
 import { PostsComponent } from './Components/posts/posts.component';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -17,6 +18,7 @@ import { PostsComponent } from './Components/posts/posts.component';
   imports: [
     BrowserModule,
     HttpClientModule,
+    FormsModule,
     NgxsModule.forRoot([PostsStateModel],
       { developmentMode: !environment.production }
     ),

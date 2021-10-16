@@ -13,4 +13,7 @@ export class ApiService {
   deletePost(id:any) {
     return this.http.get<any>(this.url + id);
   }
+  searchPost(id:any) {
+    return this.http.get<any>(this.url + id);
+  }
 }
