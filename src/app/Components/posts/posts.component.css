@@ -1,0 +1,12 @@
+.container {
+    margin-top: 5px;
+}
+
+.card {
+    margin-right: 3px;
+}
+
+p {
+    width: 200px;
+    Word-wrap: break-Word;
+}
