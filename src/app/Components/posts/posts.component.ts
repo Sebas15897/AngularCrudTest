@@ -61,6 +61,7 @@ export class PostsComponent implements OnInit {
       if(element.title === title){
         const content = element
         console.log(content)
+        this.posts = this.posts.filter(x=> x.title == element.title)
         swt = true
         return true
       }
